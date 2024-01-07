@@ -1,18 +1,18 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
+import { Inter } from "next/font/google";
+import "./globals.css";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Winter | Person Portfolio',
+  title: "Winter | Person Portfolio",
   description:
-    'Winter is a full stack web developer with 4 years of experience.',
-}
+    "Winter is a full stack web developer with 4 years of experience.",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en">
@@ -24,5 +24,5 @@ export default function RootLayout({
         {children}
       </body>
     </html>
-  )
+  );
 }
