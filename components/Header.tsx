@@ -1,13 +1,13 @@
 "use client";
 
-import { motion, spring } from "framer-motion";
-import React, { useState } from "react";
+import { useActiveSectionContest } from "@/context/ActiveSectionContextProvider";
 import { links } from "@/lib/data";
-import Link from "next/link";
 import clsx from "clsx";
+import { motion, spring } from "framer-motion";
+import Link from "next/link";
 
 export default function Header() {
-  const [activeSection, setActiveSection] = useState('Home');
+ const {activeSection, setActiveSection, setTimeOfLastClick} = useActiveSectionContest();
   return (
     <header id="home" className="relative z-[999] scroll-mt-[100rem]">
       <motion.div
@@ -23,7 +23,7 @@ export default function Header() {
               key={link.hash}
               initial={{ y: -100, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              onClick={() => setActiveSection(link.name)}
+              onClick={() => {setActiveSection(link.name); setTimeOfLastClick(Date.now());}}
             >
               <Link
                 className={clsx(
@@ -34,13 +34,14 @@ export default function Header() {
               >
                 {link.name}
                 {link.name === activeSection && (
-                  <motion.span className="absolute inset-0 -z-10 rounded-full bg-gray-100"
-                  layoutId="activeSection"
-                  transition={{
-                    type: spring,
-                    stiffness: 380,
-                    damping: 30,
-                  }}
+                  <motion.span
+                    className="absolute inset-0 -z-10 rounded-full bg-gray-100"
+                    layoutId="activeSection"
+                    transition={{
+                      type: spring,
+                      stiffness: 380,
+                      damping: 30,
+                    }}
                   ></motion.span>
                 )}
               </Link>
