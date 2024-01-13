@@ -1,14 +1,11 @@
 "use client";
 
+import { useSectionInView } from "@/lib/hooks";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect } from "react";
-import { FaGithub } from "react-icons/fa";
 import { BsArrowRight, BsDownload, BsLinkedin } from "react-icons/bs";
-import { useActiveSectionContest } from "@/context/ActiveSectionContextProvider";
-import { useInView } from "react-intersection-observer";
-import { useSectionInView } from "@/lib/hooks";
+import { FaGithub } from "react-icons/fa";
 
 export default function Intro() {
   const { ref } = useSectionInView("Home", 0.5);
