@@ -1,5 +1,6 @@
 "use client";
 
+import { useActiveSectionContext } from "@/context/ActiveSectionContextProvider";
 import { useSectionInView } from "@/lib/hooks";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -9,6 +10,7 @@ import { FaGithub } from "react-icons/fa";
 
 export default function Intro() {
   const { ref } = useSectionInView("Home", 0.5);
+  const {setActiveSection, setTimeOfLastClick} = useActiveSectionContext();
   return (
     <section
       ref={ref}
@@ -71,25 +73,29 @@ export default function Intro() {
         <Link
           href="#contact"
           className="flex items-center gap-2 rounded-full bg-gray-900 px-7 py-3 text-white outline-none transition hover:scale-110 hover:bg-gray-950 focus:scale-110 active:scale-105"
+          onClick={() => {
+            setActiveSection("Contact");
+            setTimeOfLastClick(Date.now());
+          }}
         >
           Contact me here <BsArrowRight className="opacity-70" />
         </Link>
         <a
-          className="flex cursor-pointer items-center gap-2 rounded-full border-black/10 bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
+          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white px-7 py-3 outline-none transition hover:scale-110 focus:scale-110 active:scale-105"
           href="/CV.pdf"
           download
         >
           Download CV <BsDownload />
         </a>
         <a
-          className="flex cursor-pointer items-center gap-2 rounded-full border-black/10 bg-white p-4 text-gray-700 hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
           href="https://www.linkedin.com"
           target="_blank"
         >
           <BsLinkedin />
         </a>
         <a
-          className="flex cursor-pointer items-center gap-2 rounded-full border-black/10 bg-white p-4 text-gray-700 hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
+          className="borderBlack flex cursor-pointer items-center gap-2 rounded-full bg-white p-4 text-gray-700 hover:scale-[1.15] hover:text-gray-950 focus:scale-[1.15] active:scale-105"
           href="https://github.com/TuwenMark"
           target="_blank"
         >

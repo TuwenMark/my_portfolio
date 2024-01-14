@@ -1,7 +1,7 @@
 "use client";
 
 import { SectionName } from "@/lib/types";
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useMemo, useState } from "react";
 
 type ActiveSectionContextType = {
   activeSection: SectionName;
@@ -15,20 +15,23 @@ export const ActiveSectionContext =
 
 export default function ActiveSectionContextProvider({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   const [activeSection, setActiveSection] = useState<SectionName>("Home");
   const [timeOfLastClick, setTimeOfLastClick] = useState(0);
+  // memorize the calculation result and recalculate only if the array changes
+  const values = useMemo(
+    () => ({
+      activeSection,
+      setActiveSection,
+      timeOfLastClick,
+      setTimeOfLastClick,
+    }),
+    [activeSection, setActiveSection],
+  );
   return (
-    <ActiveSectionContext.Provider
-      value={{
-        activeSection,
-        setActiveSection,
-        timeOfLastClick,
-        setTimeOfLastClick,
-      }}
-    >
+    <ActiveSectionContext.Provider value={values}>
       {children}
     </ActiveSectionContext.Provider>
   );
@@ -36,11 +39,11 @@ export default function ActiveSectionContextProvider({
 /**
  * custom hook
  */
-export function useActiveSectionContest() {
+export function useActiveSectionContext() {
   const activeSectionContext = useContext(ActiveSectionContext);
   if (!activeSectionContext) {
     throw new Error(
-      "useActiveSectionContest must be used in an ActiveSectionContextProvider",
+      "useActiveSectionContext must be used in an ActiveSectionContextProvider",
     );
   }
   return activeSectionContext;
