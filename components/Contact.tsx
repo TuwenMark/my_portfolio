@@ -24,7 +24,7 @@ export default function Contact() {
       }}
     >
       <SectionHeading>Contact Me</SectionHeading>
-      <p>
+      <p className="-mt-6 text-gray-700 dark:text-white/80">
         please contact me directly at{" "}
         <a className="underline" href="mailto:marktuwen2020@gmail.com">
           marktuwen2020@gmail.com
@@ -32,11 +32,11 @@ export default function Contact() {
         or through this form
       </p>
       <form
-        className="mt-10 flex flex-col"
+        className="mt-10 flex flex-col dark:text-black"
         action={async (formData) => {
           const { data, error } = await sendEmail(formData);
           if (!data && error) {
-            console.log(error)
+            console.log(error);
             toast.error("Internal error, please try again later");
           } else {
             console.log(data);
@@ -47,14 +47,14 @@ export default function Contact() {
         <input
           name="email"
           type="email"
-          className="borderBlack h-14 rounded-lg px-4 outline-none"
+          className="borderBlack h-14 rounded-lg px-4 outline-none transition-all dark:bg-white/80 dark:focus:bg-white/100"
           placeholder="Your email"
           required
           maxLength={500}
         />
         <textarea
           name="message"
-          className="borderBlack my-3 h-52 resize-none rounded-lg p-4 outline-none"
+          className="borderBlack my-3 h-52 resize-none rounded-lg p-4 outline-none transition-all dark:bg-white/80 dark:focus:bg-white/100"
           placeholder="Your message"
           required
           maxLength={500}
