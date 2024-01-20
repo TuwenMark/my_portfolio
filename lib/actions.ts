@@ -15,8 +15,9 @@ export async function sendEmail(formData: FormData) {
   ) {
     return { error: "Invalid email or message" };
   }
+  let data;
   try {
-    await resend.emails.send({
+    data = await resend.emails.send({
       from: "Contact Form <onboarding@resend.dev>",
       to: "marktuwen2020@gmail.com",
       subject: "New message from contact form",
@@ -28,6 +29,7 @@ export async function sendEmail(formData: FormData) {
       }),
     });
   } catch (error: unknown) {
-    return getErrorMessage(error);
+    return { error: getErrorMessage(error) };
   }
-};
+  return { data };
+}
