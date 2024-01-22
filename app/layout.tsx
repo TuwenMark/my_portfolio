@@ -8,7 +8,7 @@ import ThemeContextProvider from "@/context/ThemeContextProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Winter | Person Portfolio",
+  title: "Winter | Personal Portfolio",
   description:
     "Winter is a full stack web developer with 4 years of experience.",
   metadataBase: new URL("https://winter-portfolio-website.vercel.app"),
