@@ -36,10 +36,9 @@ export default function Contact() {
         action={async (formData) => {
           const { data, error } = await sendEmail(formData);
           if (!data && error) {
-            console.log(error);
-            toast.error("Internal error, please try again later");
+            // toast.error("Internal error, please try again later");
+            toast.error(error);
           } else {
-            console.log(data);
             toast.success("Email sent successfully");
           }
         }}

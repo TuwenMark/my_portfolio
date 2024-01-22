@@ -1,20 +1,36 @@
 "use server";
 
 import { Resend } from "resend";
-import { getErrorMessage, validateContactFormData } from "./utils";
 import React from "react";
+import { z } from "zod";
+import { getErrorMessage, validateContactFormData } from "./utils";
 import ContactFormEmail from "@/email/ContactFormEmail";
 
 export async function sendEmail(formData: FormData) {
-  const email = formData.get("email");
-  const message = formData.get("message");
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  if (
-    !validateContactFormData(email, 500) ||
-    !validateContactFormData(message, 5000)
-  ) {
-    return { error: "Invalid email or message" };
+  const FormSchema = z.object({
+    email: z
+      .string()
+      .email({
+        message: "Invalid email address",
+      })
+      .max(50),
+    message: z
+      .string({
+        required_error: "Message is required",
+      })
+      .max(500),
+  });
+  const validatedFields = FormSchema.safeParse({
+    email: formData.get("email"),
+    message: formData.get("message"),
+  });
+  if (!validatedFields.success) {
+    return {
+      error: validatedFields.error.message,
+    };
   }
+  const { email, message } = validatedFields.data;
+  const resend = new Resend(process.env.RESEND_API_KEY);
   let data;
   try {
     data = await resend.emails.send({
